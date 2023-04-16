@@ -1,25 +1,42 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
+
+//increase snake size
+class snakePart {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+}
+
+let speed = 7;
 let tileCount = 20;
+
 let tileSize = 18;
 let headX = 10;
 let headY = 10;
+
+// array for snake parts
+const snakeParts = [];
+let tailLength = 2;
+
+//initialize the speed of snake
 let xvelocity = 0;
 let yvelocity = 0;
+
+//draw apple
 let appleX = 5;
 let appleY = 5;
 
-document.body.addEventListener("keydown", keyDown);
-
 function drawGame() {
-  let speed = 7;
+  changeSnakePosition();
 
-  setTimeout(drawGame, 1000 / speed);
   clearScreen();
   drawSnake();
-  changeSnakePosition();
-  checkCollision();
   drawApple();
+
+  checkCollision();
+  setTimeout(drawGame, 1000 / speed);
 }
 
 function clearScreen() {
@@ -28,6 +45,19 @@ function clearScreen() {
 }
 
 function drawSnake() {
+  ctx.fillStyle = "orange";
+  //loop through snakeparts array
+  for (let i = 0; i < snakeParts.length; i++) {
+    //draw snake parts
+    let part = snakeParts[i];
+    ctx.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize);
+  }
+  //add parts to snake --through push
+  snakeParts.push(new snakePart(headX, headY));
+  if (snakeParts.length > tailLength) {
+    snakeParts.shift();
+  }
+
   ctx.fillStyle = "orange";
   ctx.fillRect(headX * tileCount, headY * tileCount, tileSize, tileSize);
 }
@@ -68,8 +98,12 @@ function checkCollision() {
   if (appleX == headX && appleY == headY) {
     appleX = Math.floor(Math.random() * tileCount);
     appleY = Math.floor(Math.random() * tileCount);
+    tailLength++;
   }
 }
+
+// add event listener
+document.body.addEventListener("keydown", keyDown);
 
 function drawApple() {
   ctx.fillStyle = "red";
