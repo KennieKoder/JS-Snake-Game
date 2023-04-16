@@ -42,9 +42,9 @@ function drawGame() {
   clearScreen();
   drawSnake();
   drawApple();
-  drawScore();
 
   checkCollision();
+  drawScore();
   setTimeout(drawGame, 1000 / speed);
 }
 
@@ -76,24 +76,25 @@ function isGameOver() {
       gameOver = true;
       break; // to break out of for loop
     }
-
-    if (gameOver) {
-      ctx.fillStyle = "white";
-      ctx.font = "50px verdana";
-      ctx.fillText(
-        "Game Over! ",
-        canvas.clientWidth / 6.5,
-        canvas.clientHeight / 2
-      );
-    }
-    return gameOver;
   }
+
+  if (gameOver) {
+    ctx.fillStyle = "white";
+    ctx.font = "50px verdana";
+    ctx.fillText(
+      "Game Over! ",
+      canvas.clientWidth / 6.5,
+      canvas.clientHeight / 2
+    );
+  }
+
+  return gameOver;
 }
 
 function drawScore() {
   ctx.fillStyle = "white";
-  ctx.font = "10px verdona";
-  ctx.fillText("Score: " + score, canvas.clientWidth - 50, 10);
+  ctx.font = "15px verdana";
+  ctx.fillText("Score: " + score, canvas.clientWidth - 70, 20);
 }
 
 function clearScreen() {
@@ -118,6 +119,29 @@ function drawSnake() {
   ctx.fillStyle = "orange";
   ctx.fillRect(headX * tileCount, headY * tileCount, tileSize, tileSize);
 }
+
+function changeSnakePosition() {
+  headX = headX + xvelocity;
+  headY = headY + yvelocity;
+}
+
+function drawApple() {
+  ctx.fillStyle = "red";
+  ctx.fillRect(appleX * tileCount, appleY * tileCount, tileSize, tileSize);
+}
+
+function checkCollision() {
+  if (appleX == headX && appleY == headY) {
+    appleX = Math.floor(Math.random() * tileCount);
+    appleY = Math.floor(Math.random() * tileCount);
+
+    tailLength++;
+    score++;
+  }
+}
+
+// add event listener
+document.body.addEventListener("keydown", keyDown);
 
 function keyDown(event) {
   // up
@@ -146,26 +170,4 @@ function keyDown(event) {
   }
 }
 
-function changeSnakePosition() {
-  headX = headX + xvelocity;
-  headY = headY + yvelocity;
-}
-
-function checkCollision() {
-  if (appleX == headX && appleY == headY) {
-    appleX = Math.floor(Math.random() * tileCount);
-    appleY = Math.floor(Math.random() * tileCount);
-
-    tailLength++;
-    score++;
-  }
-}
-
-// add event listener
-document.body.addEventListener("keydown", keyDown);
-
-function drawApple() {
-  ctx.fillStyle = "red";
-  ctx.fillRect(appleX * tileCount, appleY * tileCount, tileSize, tileSize);
-}
 drawGame();
