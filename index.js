@@ -6,6 +6,8 @@ let headX = 10;
 let headY = 10;
 let xvelocity = 0;
 let yvelocity = 0;
+let appleX = 5;
+let appleY = 5;
 
 document.body.addEventListener("keydown", keyDown);
 
@@ -16,6 +18,7 @@ function drawGame() {
   clearScreen();
   drawSnake();
   changeSnakePosition();
+  drawApple();
 }
 
 function clearScreen() {
@@ -60,4 +63,8 @@ function changeSnakePosition() {
   headY = headY + yvelocity;
 }
 
+function drawApple() {
+  ctx.fillStyle = "red";
+  ctx.fillRect(appleX * tileCount, appleY * tileCount, tileSize, tileSize);
+}
 drawGame();
