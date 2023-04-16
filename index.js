@@ -76,6 +76,16 @@ function isGameOver() {
       gameOver = true;
       break; // to break out of for loop
     }
+
+    if (gameOver) {
+      ctx.fillStyle = "white";
+      ctx.font = "50px verdana";
+      ctx.fillText(
+        "Game Over! ",
+        canvas.clientWidth / 6.5,
+        canvas.clientHeight / 2
+      );
+    }
     return gameOver;
   }
 }
