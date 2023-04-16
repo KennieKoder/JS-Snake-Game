@@ -18,6 +18,7 @@ function drawGame() {
   clearScreen();
   drawSnake();
   changeSnakePosition();
+  checkCollision();
   drawApple();
 }
 
@@ -61,6 +62,13 @@ function keyDown(event) {
 function changeSnakePosition() {
   headX = headX + xvelocity;
   headY = headY + yvelocity;
+}
+
+function checkCollision() {
+  if (appleX == headX && appleY == headY) {
+    appleX = Math.floor(Math.random() * tileCount);
+    appleY = Math.floor(Math.random() * tileCount);
+  }
 }
 
 function drawApple() {
