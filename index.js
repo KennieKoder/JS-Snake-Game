@@ -33,6 +33,12 @@ let score = 0;
 function drawGame() {
   changeSnakePosition();
 
+  //game over logic
+  let result = isGameOver();
+  if (result) {
+    return;
+  }
+
   clearScreen();
   drawSnake();
   drawApple();
@@ -40,6 +46,38 @@ function drawGame() {
 
   checkCollision();
   setTimeout(drawGame, 1000 / speed);
+}
+
+function isGameOver() {
+  let gameOver = false;
+  //check if game started
+  if (yvelocity === 0 && xvelocity === 0) {
+    return false;
+  }
+  if (headX < 0) {
+    //if left wall is hit
+    gameOver = true;
+  } else if (headX === tileCount) {
+    //if right wall is hit
+    gameOver = true;
+  } else if (headY < 0) {
+    //if top wall is hit
+    gameOver = true;
+  } else if (headY === tileCount) {
+    //if bottom wall is hit
+    gameOver = true;
+  }
+
+  //stop game when snake runs into itself -- idk why this isn't working but circle back to it
+
+  for (let i = 0; i < snakeParts.length; i++) {
+    let part = snakeParts[i];
+    if (part.x === headX && part.y === headY) {
+      gameOver = true;
+      break; // to break out of for loop
+    }
+    return gameOver;
+  }
 }
 
 function drawScore() {
