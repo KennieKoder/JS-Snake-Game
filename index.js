@@ -28,15 +28,24 @@ let yvelocity = 0;
 let appleX = 5;
 let appleY = 5;
 
+let score = 0;
+
 function drawGame() {
   changeSnakePosition();
 
   clearScreen();
   drawSnake();
   drawApple();
+  drawScore();
 
   checkCollision();
   setTimeout(drawGame, 1000 / speed);
+}
+
+function drawScore() {
+  ctx.fillStyle = "white";
+  ctx.font = "10px verdona";
+  ctx.fillText("Score: " + score, canvas.clientWidth - 50, 10);
 }
 
 function clearScreen() {
@@ -98,7 +107,9 @@ function checkCollision() {
   if (appleX == headX && appleY == headY) {
     appleX = Math.floor(Math.random() * tileCount);
     appleY = Math.floor(Math.random() * tileCount);
+
     tailLength++;
+    score++;
   }
 }
 
