@@ -5,8 +5,15 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: black;
 }
 
 canvas {
-  box-shadow: black 20px 10px 50px;
+  box-shadow: white 0px 1px 25px;
+}
+
+.snake-decor {
+  position: fixed;
+  left: -20px;
+  top: 20px;
 }
